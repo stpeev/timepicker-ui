@@ -46,6 +46,12 @@ const clockOptions = [
     description: "Auto-switch after hour",
   },
   {
+    name: "confirmOnMinuteSelect",
+    type: "boolean",
+    default: "false",
+    description: "Confirm and close after minute selection",
+  },
+  {
     name: "disabledTime",
     type: "object",
     default: "undefined",
@@ -95,6 +101,18 @@ const uiOptions = [
     type: "boolean",
     default: "false",
     description: "Show mode switch icon",
+  },
+  {
+    name: "hideHeader",
+    type: "boolean",
+    default: "false",
+    description: "Hide the time heading and input controls",
+  },
+  {
+    name: "hideFooter",
+    type: "boolean",
+    default: "false",
+    description: "Remove the footer and its actions",
   },
   {
     name: "editable",
@@ -163,7 +181,7 @@ const wheelOptions = [
     name: "hideFooter",
     type: "boolean",
     default: "false",
-    description: "Hide footer in compact-wheel mode",
+    description: "Deprecated alias for ui.hideFooter in compact-wheel mode",
   },
   {
     name: "commitOnScroll",
@@ -466,16 +484,17 @@ export default function ConfigurationPage() {
   },
   ui: {
     theme: 'dark',
+    mode: 'wheel',
     animation: true,
     backdrop: true,
     mobile: false,
     editable: false,
     enableScrollbar: false,
     enableSwitchIcon: true,
+    hideFooter: true,
   },
   wheel: {
     placement: 'bottom',
-    hideFooter: true,
     commitOnScroll: true
   },
   labels: {
@@ -566,10 +585,9 @@ export default function ConfigurationPage() {
         </h2>
         <CodeBlock
           code={`{
-  ui: { mode: 'wheel' },
+  ui: { mode: 'wheel', hideFooter: true },
   wheel: {
     placement: 'bottom',     // Popover placement (compact-wheel only)
-    hideFooter: true,        // Hide OK/Cancel footer
     commitOnScroll: true,    // Commit value on scroll end
     ignoreOutsideClick: true  // Keep open on outside click
   }

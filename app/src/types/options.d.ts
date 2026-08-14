@@ -52,6 +52,13 @@ export interface ClockOptions {
   autoSwitchToMinutes?: boolean;
 
   /**
+   * @description Confirm the selected time and close the modal after minute selection completes.
+   * Ignored in range and inline modes.
+   * @default false
+   */
+  confirmOnMinuteSelect?: boolean;
+
+  /**
    * @description Enable smooth hour snapping with animation
    * In v5.0.0, this will become default and option will be renamed to discreteHourJump (inverted)
    * @default true
@@ -145,6 +152,20 @@ export interface UIOptions {
    * @default false
    */
   enableSwitchIcon?: boolean;
+
+  /**
+   * @description Hide the visible time heading and editable time controls while retaining clock state.
+   * In 12-hour clock mode this also removes the AM/PM controls.
+   * @default false
+   */
+  hideHeader?: boolean;
+
+  /**
+   * @description Omit the footer and its Clear, Cancel, OK, and view-switch controls.
+   * Pair with a suitable automatic confirmation behavior when explicit confirmation is required.
+   * @default false
+   */
+  hideFooter?: boolean;
 
   /**
    * @description Allow editing hour/minutes directly
@@ -446,6 +467,7 @@ export interface WheelOptions {
    * is not rendered in the DOM at all. Only works in compact-wheel mode.
    * Useful when commitOnScroll is enabled and buttons are unnecessary.
    * @default false
+   * @deprecated Use ui.hideFooter instead.
    */
   hideFooter?: boolean;
 

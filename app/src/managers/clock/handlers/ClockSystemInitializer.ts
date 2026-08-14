@@ -63,11 +63,21 @@ export class ClockSystemInitializer {
           const m = this.core.getMinutes();
           const h = this.core.getHour();
           const activeTypeMode = this.core.getActiveTypeMode();
-          this.emitter.emit('range:minute:commit', {
+          const data = {
             hour: h?.value ?? '12',
             minutes: m?.value ?? '00',
             type: activeTypeMode?.textContent ?? undefined,
-          });
+          };
+          this.emitter.emit('range:minute:commit', data);
+
+          const shouldConfirm =
+            this.core.options.clock.confirmOnMinuteSelect &&
+            !this.core.options.range.enabled &&
+            !this.core.options.ui.inline?.enabled;
+
+          if (shouldConfirm) {
+            this.emitter.emit('confirm', data);
+          }
         },
       },
       onHourChange: (hourValue: string) => {

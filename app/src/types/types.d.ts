@@ -183,6 +183,12 @@ export type OptionTypes = {
   timeLabel?: string;
   /** Auto-switch to minutes @default true */
   autoSwitchToMinutes?: boolean;
+  /** Confirm and close after minute selection @default false */
+  confirmOnMinuteSelect?: boolean;
+  /** Omit the picker header @default false */
+  hideHeader?: boolean;
+  /** Omit the picker footer @default false */
+  hideFooter?: boolean;
   /** Theme @default "basic" */
   theme?:
     | 'basic'

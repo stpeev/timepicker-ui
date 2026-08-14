@@ -50,6 +50,12 @@ const clockOptions = [
     description: "Auto-switch to minutes after hour selection",
   },
   {
+    name: "confirmOnMinuteSelect",
+    type: "boolean",
+    default: "false",
+    description: "Confirm the value and close the modal after minute selection",
+  },
+  {
     name: "disabledTime",
     type: "DisabledTime",
     default: "undefined",
@@ -99,6 +105,20 @@ const uiOptions = [
     type: "boolean",
     default: "false",
     description: "Show desktop/mobile switch icon",
+  },
+  {
+    name: "hideHeader",
+    type: "boolean",
+    default: "false",
+    description:
+      "Hide the time heading and input controls while retaining clock state",
+  },
+  {
+    name: "hideFooter",
+    type: "boolean",
+    default: "false",
+    description:
+      "Remove the footer and its Clear, Cancel, OK, and view-switch controls",
   },
   {
     name: "editable",
@@ -168,7 +188,7 @@ const wheelOptions = [
     name: "hideFooter",
     type: "boolean",
     default: "false",
-    description: "Hide footer (OK/Cancel/Clear buttons) in compact-wheel mode",
+    description: "Deprecated alias for ui.hideFooter in compact-wheel mode",
   },
   {
     name: "commitOnScroll",
@@ -756,10 +776,9 @@ export default function OptionsPage() {
         </p>
         <CodeBlock
           code={`const picker = new TimepickerUI(input, {
-  ui: { mode: 'wheel' },
+  ui: { mode: 'wheel', hideFooter: true },
   wheel: {
     placement: 'bottom',     // Popover placement (compact-wheel only)
-    hideFooter: true,        // Hide OK/Cancel footer
     commitOnScroll: true     // Commit value on scroll end
   }
 });`}
@@ -820,6 +839,7 @@ export default function OptionsPage() {
     incrementHours: 1,
     incrementMinutes: 5,
     autoSwitchToMinutes: true,
+    confirmOnMinuteSelect: false,
     disabledTime: {
       hours: [0, 1, 2, 3],
       interval: '10:00 - 12:00'
@@ -833,12 +853,15 @@ export default function OptionsPage() {
   // UI options
   ui: {
     theme: 'dark',
+    mode: 'wheel',
     animation: true,
     backdrop: true,
     mobile: false,
     enableScrollbar: false,
     enableSwitchIcon: false,
     editable: false,
+    hideHeader: false,
+    hideFooter: true,
     cssClass: 'custom-picker',
     appendModalSelector: '#timepicker-container'
   },
@@ -846,7 +869,6 @@ export default function OptionsPage() {
   // Wheel options
   wheel: {
     placement: 'bottom',
-    hideFooter: true,
     commitOnScroll: true,
     hideDisabled: true,
     ignoreOutsideClick: false

@@ -120,6 +120,7 @@ new TimepickerUI(input, {
     type: "12h" | "24h",        // default: "12h"
     incrementHours: 1,
     incrementMinutes: 1,
+    confirmOnMinuteSelect: false,
     disabledTime: { hours: [], minutes: [], interval: "" },
     currentTime: boolean | object,
   },
@@ -129,6 +130,8 @@ new TimepickerUI(input, {
     animation: true,
     backdrop: true,
     mobile: false,
+    hideHeader: false,
+    hideFooter: false,
     editable: false,
     inline: { enabled: false, containerId: "", showButtons: true, autoUpdate: false },
     clearButton: false,
@@ -137,7 +140,7 @@ new TimepickerUI(input, {
   labels: { am, pm, ok, cancel, time, mobileTime, mobileHour, mobileMinute, clear },
   behavior: { focusTrap: true, focusInputAfterClose: false, delayHandler: 300, id: "" },
   callbacks: { onConfirm, onCancel, onOpen, onUpdate, onSelectHour, onSelectMinute, onSelectAM, onSelectPM, onError, onClear },
-  wheel: { placement: "auto" | "top" | "bottom", hideFooter: false, commitOnScroll: false, hideDisabled: false, ignoreOutsideClick: false },
+  wheel: { placement: "auto" | "top" | "bottom", commitOnScroll: false, hideDisabled: false, ignoreOutsideClick: false },
 });
 ```
 
