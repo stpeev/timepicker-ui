@@ -58,7 +58,7 @@ Clear user messages, fail fast, typed exceptions, centralized handling, graceful
 CRLF Line Endings (Windows), Single Quotes / Semicolons / Trailing Commas, Print Width 110 with Prettier as Sole Formatter, and Indentation & File Hygiene.
 
 #### Git Workflow (`standards/global/git-workflow.md`)
-Git Is the User's Responsibility, Batch Execution, and Pull Request Process.
+Git's Batch Execution, and Pull Request Process.
 
 #### Linting (`standards/global/linting.md`)
 ESLint Flat Config + typescript-eslint Recommended, No Nested Ternaries, `any` Permitted But Prefer Types, Unused Variables Are Errors (Ignore Rest Siblings), and Pre-Commit Linting.

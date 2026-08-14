@@ -1,8 +1,5 @@
 # Git & Working Agreement
 
-### Git Is the User's Responsibility
-Never run `git add` / `commit` / `push` / `branch` / `merge`. Only read-only git (`status`, `log`, `diff`) is allowed. Version bumps, tags, and publishing are the user's job. Source: docs (architecture.md, build-release agent).
-
 ### Batch Execution
 Do not run build/test/lint after each task. Verify by reading and reasoning, report what changed and why, and let the user run the full suite at the end. A single focused test while iterating (debugging) is fine; the full suite/coverage/lint per task is not. Source: docs.
 
