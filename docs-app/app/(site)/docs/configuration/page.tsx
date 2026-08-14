@@ -115,6 +115,12 @@ const uiOptions = [
     description: "Remove the footer and its actions",
   },
   {
+    name: "showDismissButton",
+    type: "boolean",
+    default: "false",
+    description: "Show a compact close button that emits the cancel event",
+  },
+  {
     name: "editable",
     type: "boolean",
     default: "false",

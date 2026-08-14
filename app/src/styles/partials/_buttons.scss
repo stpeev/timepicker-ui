@@ -1,6 +1,53 @@
 @use '../variables.scss' as *;
 
 .tp-ui {
+  &-dismiss-btn {
+    position: absolute;
+    z-index: 1;
+    top: var(--tp-spacing-md);
+    right: var(--tp-spacing-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    color: var(--tp-on-primary-container);
+    border: var(--tp-border-width) solid var(--tp-outline-variant);
+    border-radius: 50%;
+    background-color: var(--tp-primary-container);
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: currentColor;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      opacity: 0.12;
+    }
+
+    &:active::after {
+      opacity: 0.16;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 2.25;
+    }
+  }
+
   &-clear-btn {
     margin-right: auto;
   }

@@ -37,6 +37,23 @@ describe('getModalTemplate accessibility semantics', () => {
       expect(dom.querySelector('.tp-ui-clear-btn')).toBeNull();
     });
 
+    it('shows an accessible dismiss button independently of the footer', () => {
+      const dom = render({
+        ui: { hideFooter: true, showDismissButton: true },
+        labels: { cancel: 'Dismiss time picker' },
+      });
+      const dismissButton = dom.querySelector('.tp-ui-dismiss-btn') as HTMLButtonElement;
+
+      expect(dismissButton).toHaveAttribute('type', 'button');
+      expect(dismissButton).toHaveAttribute('aria-label', 'Dismiss time picker');
+      expect(dismissButton).toHaveStyle({
+        position: 'absolute',
+        top: 'var(--tp-spacing-md)',
+        right: 'var(--tp-spacing-md)',
+      });
+      expect(dismissButton.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    });
+
     it('marks a headerless, footerless clock picker so its surface can hug the clock', () => {
       const dom = render({ ui: { hideHeader: true, hideFooter: true } });
 

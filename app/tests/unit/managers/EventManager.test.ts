@@ -141,6 +141,18 @@ describe('EventManager', () => {
       expect(emitSpy).toHaveBeenCalledWith('cancel', {});
     });
 
+    it('should emit cancel on dismiss button click', () => {
+      const dismissBtn = document.createElement('button');
+      jest.spyOn(coreState, 'getCancelButton').mockReturnValue(null);
+      jest.spyOn(coreState, 'getDismissButton').mockReturnValue(dismissBtn);
+      const emitSpy = jest.spyOn(emitter, 'emit');
+
+      eventManager.handleCancelButton();
+      dismissBtn.click();
+
+      expect(emitSpy).toHaveBeenCalledWith('cancel', {});
+    });
+
     it('should not emit when destroyed', () => {
       const cancelBtn = document.createElement('button');
       jest.spyOn(coreState, 'getCancelButton').mockReturnValue(cancelBtn);

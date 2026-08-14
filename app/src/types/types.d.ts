@@ -189,6 +189,8 @@ export type OptionTypes = {
   hideHeader?: boolean;
   /** Omit the picker footer @default false */
   hideFooter?: boolean;
+  /** Show a compact button that emits cancel @default false */
+  showDismissButton?: boolean;
   /** Theme @default "basic" */
   theme?:
     | 'basic'

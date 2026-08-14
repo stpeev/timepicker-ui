@@ -168,6 +168,13 @@ export interface UIOptions {
   hideFooter?: boolean;
 
   /**
+   * @description Show a compact close button that emits the cancel event.
+   * Useful when the footer is hidden but the picker still needs a visible dismiss action.
+   * @default false
+   */
+  showDismissButton?: boolean;
+
+  /**
    * @description Allow editing hour/minutes directly
    * @default false
    */

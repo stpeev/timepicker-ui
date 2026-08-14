@@ -120,6 +120,13 @@
         "default": "false"
       },
       {
+        "name": "showDismissButton",
+        "optional": true,
+        "type": "boolean",
+        "description": "Show a compact close button that emits the cancel event.\nUseful when the footer is hidden but the picker still needs a visible dismiss action.",
+        "default": "false"
+      },
+      {
         "name": "editable",
         "optional": true,
         "type": "boolean",

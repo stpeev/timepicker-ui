@@ -136,6 +136,17 @@ const buildFooter = (options: Required<TimepickerOptions>, mobileClass: string):
   return `<div class="tp-ui-footer ${mobileClass}" ${mobileClass ? 'data-view="mobile"' : ''}>${switchIcon}<div class="tp-ui-wrapper-btn ${mobileClass}">${clearButton}<div class="tp-ui-cancel-btn ${mobileClass}" data-md3-ripple tabindex="0" role="button" aria-label="${cancelLabel}">${cancelLabel}</div><div class="tp-ui-ok-btn ${mobileClass}" data-md3-ripple tabindex="0" role="button" aria-label="${okLabel}">${okLabel}</div></div></div>`;
 };
 
+const buildDismissButton = (options: Required<TimepickerOptions>): string => {
+  const {
+    ui: { showDismissButton },
+    labels: { cancel: cancelLabel },
+  } = options;
+
+  if (!showDismissButton) return '';
+
+  return `<button type="button" class="tp-ui-dismiss-btn" data-md3-ripple aria-label="${cancelLabel}" style="position:absolute;top:var(--tp-spacing-md);right:var(--tp-spacing-md)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg></button>`;
+};
+
 export const getModalTemplate = (options: Required<TimepickerOptions>, instanceId: string): string => {
   const {
     ui: { mode: pickerMode, animation, theme, mobile },
@@ -166,6 +177,7 @@ export const getModalTemplate = (options: Required<TimepickerOptions>, instanceI
   const header = isCompactWheel ? '' : buildHeader(options, config, options.ui.hideHeader === true);
   const pickerBody = buildPickerBody(config, incrementMinutes ?? 1, options);
   const footer = footerHidden ? '' : buildFooter(options, mobileClass);
+  const dismissButton = buildDismissButton(options);
   const dialogLabel = mobile ? options.labels.mobileTime : options.labels.time;
   const dialogLabelAttribute = headerHidden
     ? `aria-label="${dialogLabel}"`
@@ -181,5 +193,5 @@ export const getModalTemplate = (options: Required<TimepickerOptions>, instanceI
     wheelClass = '';
   }
 
-  return `<div class="tp-ui-modal normalize ${mobileClass}${isRangeMode ? ' tp-ui-range-mode' : ''}${isTzMode ? ' tp-ui-tz-mode' : ''}${wheelClass}" data-theme="${theme}" role="dialog" aria-modal="true" ${dialogLabelAttribute} data-owner-id="${instanceId}" style='transition:${animation ? 'opacity 0.15s linear' : 'none'}'><div class="tp-ui-wrapper ${mobileClass}${isClockOnly ? ' tp-ui-wrapper--clock-only' : ''}" tabindex="0">${rangeSelector}${header}${timezoneSelector}${pickerBody}${footer}</div><div class="timepicker-announcer sr-only" role="status" aria-live="polite" aria-atomic="true"></div></div>`;
+  return `<div class="tp-ui-modal normalize ${mobileClass}${isRangeMode ? ' tp-ui-range-mode' : ''}${isTzMode ? ' tp-ui-tz-mode' : ''}${wheelClass}" data-theme="${theme}" role="dialog" aria-modal="true" ${dialogLabelAttribute} data-owner-id="${instanceId}" style='transition:${animation ? 'opacity 0.15s linear' : 'none'}'><div class="tp-ui-wrapper ${mobileClass}${isClockOnly ? ' tp-ui-wrapper--clock-only' : ''}" tabindex="0">${dismissButton}${rangeSelector}${header}${timezoneSelector}${pickerBody}${footer}</div><div class="timepicker-announcer sr-only" role="status" aria-live="polite" aria-atomic="true"></div></div>`;
 };

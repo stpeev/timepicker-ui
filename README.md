@@ -132,6 +132,7 @@ new TimepickerUI(input, {
     mobile: false,
     hideHeader: false,
     hideFooter: false,
+    showDismissButton: false,
     editable: false,
     inline: { enabled: false, containerId: "", showButtons: true, autoUpdate: false },
     clearButton: false,

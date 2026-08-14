@@ -20,6 +20,7 @@ export const DEFAULT_OPTIONS: Required<TimepickerOptions> = {
     enableSwitchIcon: false,
     hideHeader: false,
     hideFooter: false,
+    showDismissButton: false,
     editable: false,
     enableScrollbar: false,
     cssClass: undefined,
