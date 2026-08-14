@@ -37,6 +37,12 @@ describe('getModalTemplate accessibility semantics', () => {
       expect(dom.querySelector('.tp-ui-clear-btn')).toBeNull();
     });
 
+    it('marks a headerless, footerless clock picker so its surface can hug the clock', () => {
+      const dom = render({ ui: { hideHeader: true, hideFooter: true } });
+
+      expect(dom.querySelector('.tp-ui-wrapper')).toHaveClass('tp-ui-wrapper--clock-only');
+    });
+
     it('renders the header and footer by default', () => {
       const dom = render({ labels: { time: 'Choose time' } });
       const dialog = dom.querySelector('.tp-ui-modal') as HTMLElement;
