@@ -37,7 +37,10 @@ export class ButtonHandlers {
     };
 
     if (cancelButton) this.cleanupHandlers.push(bindActivate(cancelButton, handler));
-    if (dismissButton) this.cleanupHandlers.push(bindActivate(dismissButton, handler));
+    if (dismissButton) {
+      dismissButton.addEventListener('click', handler);
+      this.cleanupHandlers.push(() => dismissButton.removeEventListener('click', handler));
+    }
   }
 
   handleOkButton(): void {
