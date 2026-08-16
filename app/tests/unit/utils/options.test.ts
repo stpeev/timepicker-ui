@@ -8,6 +8,7 @@ describe('options defaults', () => {
       expect(DEFAULT_OPTIONS.clock.incrementHours).toBe(1);
       expect(DEFAULT_OPTIONS.clock.incrementMinutes).toBe(1);
       expect(DEFAULT_OPTIONS.clock.autoSwitchToMinutes).toBe(true);
+      expect(DEFAULT_OPTIONS.clock.confirmOnMinuteSelect).toBe(false);
     });
 
     it('should have ui options', () => {
@@ -18,6 +19,9 @@ describe('options defaults', () => {
       expect(DEFAULT_OPTIONS.ui.mobile).toBe(false);
       expect(DEFAULT_OPTIONS.ui.enableSwitchIcon).toBe(false);
       expect(DEFAULT_OPTIONS.ui.editable).toBe(false);
+      expect(DEFAULT_OPTIONS.ui.hideHeader).toBe(false);
+      expect(DEFAULT_OPTIONS.ui.hideFooter).toBe(false);
+      expect(DEFAULT_OPTIONS.ui.showDismissButton).toBe(false);
     });
 
     it('should have labels options', () => {
@@ -92,21 +96,25 @@ describe('options defaults', () => {
 
     it('should merge clock options', () => {
       const result = mergeOptions({
-        clock: { type: '24h' },
+        clock: { type: '24h', confirmOnMinuteSelect: true },
       });
 
       expect(result.clock.type).toBe('24h');
+      expect(result.clock.confirmOnMinuteSelect).toBe(true);
       expect(result.clock.autoSwitchToMinutes).toBe(true);
       expect(result.clock.incrementMinutes).toBe(1);
     });
 
     it('should merge ui options', () => {
       const result = mergeOptions({
-        ui: { theme: 'dark', mobile: true },
+        ui: { theme: 'dark', mobile: true, hideHeader: true, hideFooter: true, showDismissButton: true },
       });
 
       expect(result.ui.theme).toBe('dark');
       expect(result.ui.mobile).toBe(true);
+      expect(result.ui.hideHeader).toBe(true);
+      expect(result.ui.hideFooter).toBe(true);
+      expect(result.ui.showDismissButton).toBe(true);
       expect(result.ui.animation).toBe(true);
     });
 
@@ -222,4 +230,3 @@ describe('options defaults', () => {
     });
   });
 });
-

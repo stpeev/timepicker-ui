@@ -28,14 +28,19 @@ export class ButtonHandlers {
 
   handleCancelButton(): void {
     const cancelButton = this.core.getCancelButton();
-    if (!cancelButton) return;
+    const dismissButton = this.core.getDismissButton();
+    if (!cancelButton && !dismissButton) return;
 
     const handler = (): void => {
       if (this.core.isDestroyed) return;
       this.emitter.emit('cancel', {});
     };
 
-    this.cleanupHandlers.push(bindActivate(cancelButton as HTMLElement, handler));
+    if (cancelButton) this.cleanupHandlers.push(bindActivate(cancelButton, handler));
+    if (dismissButton) {
+      dismissButton.addEventListener('click', handler);
+      this.cleanupHandlers.push(() => dismissButton.removeEventListener('click', handler));
+    }
   }
 
   handleOkButton(): void {

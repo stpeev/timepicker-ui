@@ -31,6 +31,13 @@
         "default": "true"
       },
       {
+        "name": "confirmOnMinuteSelect",
+        "optional": true,
+        "type": "boolean",
+        "description": "Confirm the selected time and close the modal after minute selection completes.\r\nIgnored in range and inline modes.",
+        "default": "false"
+      },
+      {
         "name": "smoothHourSnap",
         "optional": true,
         "type": "boolean",
@@ -96,6 +103,27 @@
         "optional": true,
         "type": "boolean",
         "description": "Enable switch icon (mobile ↔ desktop)",
+        "default": "false"
+      },
+      {
+        "name": "hideHeader",
+        "optional": true,
+        "type": "boolean",
+        "description": "Hide the visible time heading and editable time controls while retaining clock state.\r\nIn 12-hour clock mode this also removes the AM/PM controls.",
+        "default": "false"
+      },
+      {
+        "name": "hideFooter",
+        "optional": true,
+        "type": "boolean",
+        "description": "Omit the footer and its Clear, Cancel, OK, and view-switch controls.\r\nPair with a suitable automatic confirmation behavior when explicit confirmation is required.",
+        "default": "false"
+      },
+      {
+        "name": "showDismissButton",
+        "optional": true,
+        "type": "boolean",
+        "description": "Show a compact close button that emits the cancel event.\nUseful when the footer is hidden but the picker still needs a visible dismiss action.",
         "default": "false"
       },
       {

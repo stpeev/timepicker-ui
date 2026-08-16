@@ -2,6 +2,7 @@ import { getModalTemplate } from '../../../../src/utils/template';
 import { mergeOptions } from '../../../../src/utils/options/defaults';
 import { PluginRegistry } from '../../../../src/core/PluginRegistry';
 import { RangePlugin } from '../../../../src/plugins/range';
+import { WheelPlugin } from '../../../../src/plugins/wheel';
 import type { TimepickerOptions } from '../../../../src/types/options';
 
 function render(options: TimepickerOptions): HTMLDivElement {
@@ -12,6 +13,80 @@ function render(options: TimepickerOptions): HTMLDivElement {
 }
 
 describe('getModalTemplate accessibility semantics', () => {
+  describe('structural visibility options', () => {
+    it('hides the header without removing clock state inputs and gives the dialog a direct accessible name', () => {
+      const dom = render({ ui: { hideHeader: true }, labels: { time: 'Choose intake time' } });
+      const dialog = dom.querySelector('.tp-ui-modal') as HTMLElement;
+      const heading = dom.querySelector('.tp-ui-select-time') as HTMLElement;
+      const header = dom.querySelector('.tp-ui-header') as HTMLElement;
+
+      expect(heading.hidden).toBe(true);
+      expect(header.hidden).toBe(true);
+      expect(header.querySelector('input[name="hour"]')).not.toBeNull();
+      expect(header.querySelector('input[name="minutes"]')).not.toBeNull();
+      expect(dialog.getAttribute('aria-label')).toBe('Choose intake time');
+      expect(dialog.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    it('omits the footer and all footer actions', () => {
+      const dom = render({ ui: { hideFooter: true, clearButton: true } });
+
+      expect(dom.querySelector('.tp-ui-footer')).toBeNull();
+      expect(dom.querySelector('.tp-ui-ok-btn')).toBeNull();
+      expect(dom.querySelector('.tp-ui-cancel-btn')).toBeNull();
+      expect(dom.querySelector('.tp-ui-clear-btn')).toBeNull();
+    });
+
+    it('shows an accessible dismiss button independently of the footer', () => {
+      const dom = render({
+        ui: { hideFooter: true, showDismissButton: true },
+        labels: { cancel: 'Dismiss time picker' },
+      });
+      const dismissButton = dom.querySelector('.tp-ui-dismiss-btn') as HTMLButtonElement;
+
+      expect(dismissButton).toHaveAttribute('type', 'button');
+      expect(dismissButton).toHaveAttribute('aria-label', 'Dismiss time picker');
+      expect(dismissButton).toHaveStyle({
+        position: 'absolute',
+        top: 'var(--tp-spacing-md)',
+        right: 'var(--tp-spacing-md)',
+      });
+      expect(dismissButton.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('marks a headerless, footerless clock picker so its surface can hug the clock', () => {
+      const dom = render({ ui: { hideHeader: true, hideFooter: true } });
+
+      expect(dom.querySelector('.tp-ui-wrapper')).toHaveClass('tp-ui-wrapper--clock-only');
+    });
+
+    it('renders the header and footer by default', () => {
+      const dom = render({ labels: { time: 'Choose time' } });
+      const dialog = dom.querySelector('.tp-ui-modal') as HTMLElement;
+
+      expect(dom.querySelector('.tp-ui-select-time')).not.toBeNull();
+      expect(dom.querySelector('.tp-ui-header')).not.toBeNull();
+      expect(dom.querySelector('.tp-ui-footer')).not.toBeNull();
+      expect(dialog.getAttribute('aria-labelledby')).toBe('tp-ui-label-tmpl-instance');
+      expect(dialog.hasAttribute('aria-label')).toBe(false);
+    });
+
+    it('keeps the compact-wheel hideFooter alias and accessible dialog name', () => {
+      PluginRegistry.register(WheelPlugin);
+      const dom = render({
+        ui: { mode: 'compact-wheel' },
+        wheel: { hideFooter: true },
+        labels: { time: 'Choose wheel time' },
+      });
+      const dialog = dom.querySelector('.tp-ui-modal') as HTMLElement;
+
+      expect(dom.querySelector('.tp-ui-header')).toBeNull();
+      expect(dom.querySelector('.tp-ui-footer')).toBeNull();
+      expect(dialog.getAttribute('aria-label')).toBe('Choose wheel time');
+      expect(dialog.hasAttribute('aria-labelledby')).toBe(false);
+    });
+  });
+
   describe('hour spinbutton - 12h mode', () => {
     it('carries spinbutton range and initial value attributes', () => {
       const dom = render({ clock: { type: '12h' } });

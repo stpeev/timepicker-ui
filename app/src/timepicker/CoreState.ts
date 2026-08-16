@@ -288,6 +288,10 @@ export class CoreState {
     return this.q<HTMLButtonElement>('.tp-ui-cancel-btn');
   }
 
+  getDismissButton(): HTMLButtonElement | null {
+    return this.q<HTMLButtonElement>('.tp-ui-dismiss-btn');
+  }
+
   getOkButton(): HTMLButtonElement | null {
     return this.q<HTMLButtonElement>('.tp-ui-ok-btn');
   }

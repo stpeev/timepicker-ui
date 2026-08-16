@@ -508,7 +508,62 @@ describe('ClockSystemInitializer', () => {
       document.dispatchEvent(mouseupEvent);
 
       expect(emitSpy).toHaveBeenCalledWith('range:minute:commit', expect.any(Object));
+      expect(emitSpy).not.toHaveBeenCalledWith('confirm', expect.any(Object));
+    });
+
+    it('should confirm on mouseup in minutes mode when confirmOnMinuteSelect is enabled', () => {
+      coreState.options.clock.confirmOnMinuteSelect = true;
+      const emitSpy = jest.spyOn(emitter, 'emit');
+      initializer.initialize();
+      const clockSystem = initializer.getClockSystem();
+
+      minutesInput.classList.add('active');
+      jest.spyOn(clockFace, 'getBoundingClientRect').mockReturnValue({
+        left: 0,
+        top: 0,
+        right: 200,
+        bottom: 200,
+        width: 200,
+        height: 200,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+      clockSystem?.switchToMinutes();
+      clockFace.dispatchEvent(new MouseEvent('mousedown', { clientX: 100, clientY: 20, bubbles: true }));
+      document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+
+      expect(emitSpy).toHaveBeenCalledWith(
+        'confirm',
+        expect.objectContaining({ hour: '10', minutes: expect.any(String) }),
+      );
+    });
+
+    it('should not auto-confirm range selection when confirmOnMinuteSelect is enabled', () => {
+      coreState.options.clock.confirmOnMinuteSelect = true;
+      coreState.options.range.enabled = true;
+      const emitSpy = jest.spyOn(emitter, 'emit');
+      initializer.initialize();
+      const clockSystem = initializer.getClockSystem();
+
+      minutesInput.classList.add('active');
+      jest.spyOn(clockFace, 'getBoundingClientRect').mockReturnValue({
+        left: 0,
+        top: 0,
+        right: 200,
+        bottom: 200,
+        width: 200,
+        height: 200,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+      clockSystem?.switchToMinutes();
+      clockFace.dispatchEvent(new MouseEvent('mousedown', { clientX: 100, clientY: 20, bubbles: true }));
+      document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+
+      expect(emitSpy).not.toHaveBeenCalledWith('confirm', expect.any(Object));
+      expect(emitSpy).toHaveBeenCalledWith('range:minute:commit', expect.any(Object));
     });
   });
 });
-
