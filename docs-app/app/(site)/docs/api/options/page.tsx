@@ -127,6 +127,13 @@ const uiOptions = [
     description: "Show a compact close button that emits the cancel event",
   },
   {
+    name: "fitViewport",
+    type: "boolean",
+    default: "false",
+    description:
+      "Scale a clock-only picker to the viewport's shorter side and center it (requires hideHeader and hideFooter)",
+  },
+  {
     name: "editable",
     type: "boolean",
     default: "false",
