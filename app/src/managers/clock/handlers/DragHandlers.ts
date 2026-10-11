@@ -9,10 +9,10 @@ export interface DragHandlersConfig {
   hourElement?: HTMLInputElement | null;
   minutesElement?: HTMLInputElement | null;
   onMinuteCommit?: () => void;
-  ignoreCenterTaps?: boolean;
 }
 
 const CENTER_DEAD_ZONE_RATIO = 0.3;
+const CENTER_DEAD_ZONE_MIN_CLOCK_RADIUS = 86;
 
 export class DragHandlers {
   private controller: ClockController;
@@ -142,16 +142,16 @@ export class DragHandlers {
   }
 
   private isInCenterDeadZone(event: MouseEvent | TouchEvent): boolean {
-    if (!this.config.ignoreCenterTaps) {
+    const radius = this.getClockRadius();
+
+    if (radius < CENTER_DEAD_ZONE_MIN_CLOCK_RADIUS || !this.clockFace.closest('.tp-ui-fit-viewport')) {
       return false;
     }
 
     const point = this.getPointerPosition(event);
     const center = this.getClockCenter();
 
-    return (
-      Math.hypot(point.x - center.x, point.y - center.y) < this.getClockRadius() * CENTER_DEAD_ZONE_RATIO
-    );
+    return Math.hypot(point.x - center.x, point.y - center.y) < radius * CENTER_DEAD_ZONE_RATIO;
   }
 
   private getPointerPosition(event: MouseEvent | TouchEvent): Point {
