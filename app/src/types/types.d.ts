@@ -191,6 +191,8 @@ export type OptionTypes = {
   hideFooter?: boolean;
   /** Show a compact button that emits cancel @default false */
   showDismissButton?: boolean;
+  /** Fill the viewport with a clock-only picker @default false */
+  fitViewport?: boolean;
   /** Theme @default "basic" */
   theme?:
     | 'basic'

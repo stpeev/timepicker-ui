@@ -134,6 +134,105 @@ describe('DragHandlers', () => {
     });
   });
 
+  describe('fit-viewport center dead zone', () => {
+    const markFitViewport = (): void => {
+      const modal = document.createElement('div');
+      modal.className = 'tp-ui-modal tp-ui-fit-viewport';
+      document.body.appendChild(modal);
+      modal.appendChild(clockFace);
+    };
+
+    const mockFaceRect = (): void => {
+      jest.spyOn(clockFace, 'getBoundingClientRect').mockReturnValue({
+        left: 0,
+        top: 0,
+        right: 200,
+        bottom: 200,
+        width: 200,
+        height: 200,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+    };
+
+    const pressAt = (clientX: number, clientY: number): MouseEvent => {
+      const event = new MouseEvent('mousedown', { clientX, clientY, bubbles: true, cancelable: true });
+      clockFace.dispatchEvent(event);
+      return event;
+    };
+
+    it('ignores a press near the center and lets the event through', () => {
+      const controller = createMockController();
+      const handlers = new DragHandlers(controller as never, clockFace);
+      markFitViewport();
+      handlers.attach();
+      mockFaceRect();
+
+      const event = pressAt(115, 100);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+
+      expect(controller.handlePointerMove).not.toHaveBeenCalled();
+      expect(controller.handlePointerUp).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+
+      handlers.detach();
+    });
+
+    it('still handles a press outside the center zone', () => {
+      const controller = createMockController();
+      const handlers = new DragHandlers(controller as never, clockFace);
+      markFitViewport();
+      handlers.attach();
+      mockFaceRect();
+
+      pressAt(170, 100);
+
+      expect(controller.handlePointerMove).toHaveBeenCalled();
+
+      handlers.detach();
+    });
+
+    it('handles a press near the center when the picker is not fitted to the viewport', () => {
+      const controller = createMockController();
+      const handlers = new DragHandlers(controller as never, clockFace);
+      handlers.attach();
+      mockFaceRect();
+
+      pressAt(115, 100);
+
+      expect(controller.handlePointerMove).toHaveBeenCalled();
+
+      handlers.detach();
+    });
+
+    it('handles a press near the center on a clock too small to spare the dead zone', () => {
+      const controller = createMockController();
+      Object.defineProperty(clockFace, 'offsetWidth', { value: 120, configurable: true });
+      Object.defineProperty(clockFace, 'offsetHeight', { value: 120, configurable: true });
+      const handlers = new DragHandlers(controller as never, clockFace);
+      markFitViewport();
+      handlers.attach();
+      jest.spyOn(clockFace, 'getBoundingClientRect').mockReturnValue({
+        left: 0,
+        top: 0,
+        right: 120,
+        bottom: 120,
+        width: 120,
+        height: 120,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+
+      pressAt(70, 60);
+
+      expect(controller.handlePointerMove).toHaveBeenCalled();
+
+      handlers.detach();
+    });
+  });
+
   describe('pointer events', () => {
     it('should handle mousedown event', () => {
       const controller = createMockController();

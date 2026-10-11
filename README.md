@@ -133,6 +133,7 @@ new TimepickerUI(input, {
     hideHeader: false,
     hideFooter: false,
     showDismissButton: false,
+    fitViewport: false,                                    // clock-only: fill the viewport's shorter side
     editable: false,
     inline: { enabled: false, containerId: "", showButtons: true, autoUpdate: false },
     clearButton: false,

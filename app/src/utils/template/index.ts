@@ -174,6 +174,7 @@ export const getModalTemplate = (options: Required<TimepickerOptions>, instanceI
   const footerHidden =
     options.ui.hideFooter === true || (isCompactWheel && options.wheel?.hideFooter === true);
   const isClockOnly = pickerMode === 'clock' && headerHidden && footerHidden && !isRangeMode && !isTzMode;
+  const fitViewportClass = isClockOnly && options.ui.fitViewport === true ? ' tp-ui-fit-viewport' : '';
   const header = isCompactWheel ? '' : buildHeader(options, config, options.ui.hideHeader === true);
   const pickerBody = buildPickerBody(config, incrementMinutes ?? 1, options);
   const footer = footerHidden ? '' : buildFooter(options, mobileClass);
@@ -193,5 +194,5 @@ export const getModalTemplate = (options: Required<TimepickerOptions>, instanceI
     wheelClass = '';
   }
 
-  return `<div class="tp-ui-modal normalize ${mobileClass}${isRangeMode ? ' tp-ui-range-mode' : ''}${isTzMode ? ' tp-ui-tz-mode' : ''}${wheelClass}" data-theme="${theme}" role="dialog" aria-modal="true" ${dialogLabelAttribute} data-owner-id="${instanceId}" style='transition:${animation ? 'opacity 0.15s linear' : 'none'}'><div class="tp-ui-wrapper ${mobileClass}${isClockOnly ? ' tp-ui-wrapper--clock-only' : ''}" tabindex="0">${dismissButton}${rangeSelector}${header}${timezoneSelector}${pickerBody}${footer}</div><div class="timepicker-announcer sr-only" role="status" aria-live="polite" aria-atomic="true"></div></div>`;
+  return `<div class="tp-ui-modal normalize ${mobileClass}${isRangeMode ? ' tp-ui-range-mode' : ''}${isTzMode ? ' tp-ui-tz-mode' : ''}${wheelClass}${fitViewportClass}" data-theme="${theme}" role="dialog" aria-modal="true" ${dialogLabelAttribute} data-owner-id="${instanceId}" style='transition:${animation ? 'opacity 0.15s linear' : 'none'}'><div class="tp-ui-wrapper ${mobileClass}${isClockOnly ? ' tp-ui-wrapper--clock-only' : ''}" tabindex="0">${dismissButton}${rangeSelector}${header}${timezoneSelector}${pickerBody}${footer}</div><div class="timepicker-announcer sr-only" role="status" aria-live="polite" aria-atomic="true"></div></div>`;
 };
