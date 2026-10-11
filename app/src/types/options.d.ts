@@ -175,6 +175,14 @@ export interface UIOptions {
   showDismissButton?: boolean;
 
   /**
+   * @description Scale a clock-only picker to fill the viewport's shorter side and center it.
+   * Requires hideHeader and hideFooter; ignored otherwise. Intended for small, square screens.
+   * Presses near the clock center are ignored so a missed dismiss button never changes the time.
+   * @default false
+   */
+  fitViewport?: boolean;
+
+  /**
    * @description Allow editing hour/minutes directly
    * @default false
    */

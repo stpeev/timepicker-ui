@@ -60,6 +60,24 @@ describe('getModalTemplate accessibility semantics', () => {
       expect(dom.querySelector('.tp-ui-wrapper')).toHaveClass('tp-ui-wrapper--clock-only');
     });
 
+    it('marks a clock-only picker to fit the viewport when fitViewport is set', () => {
+      const dom = render({ ui: { hideHeader: true, hideFooter: true, fitViewport: true } });
+
+      expect(dom.querySelector('.tp-ui-modal')).toHaveClass('tp-ui-fit-viewport');
+    });
+
+    it('does not fit the viewport unless fitViewport is set', () => {
+      const dom = render({ ui: { hideHeader: true, hideFooter: true } });
+
+      expect(dom.querySelector('.tp-ui-modal')).not.toHaveClass('tp-ui-fit-viewport');
+    });
+
+    it('ignores fitViewport when the header or footer is still rendered', () => {
+      const dom = render({ ui: { fitViewport: true } });
+
+      expect(dom.querySelector('.tp-ui-modal')).not.toHaveClass('tp-ui-fit-viewport');
+    });
+
     it('renders the header and footer by default', () => {
       const dom = render({ labels: { time: 'Choose time' } });
       const dialog = dom.querySelector('.tp-ui-modal') as HTMLElement;

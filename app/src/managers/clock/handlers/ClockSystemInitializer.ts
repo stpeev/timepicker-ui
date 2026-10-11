@@ -57,6 +57,7 @@ export class ClockSystemInitializer {
         autoSwitchToMinutes: this.core.options.clock.autoSwitchToMinutes,
         isMobileView: this.core.isMobileView,
         smoothHourSnap: this.core.options.clock.smoothHourSnap ?? true,
+        ignoreCenterTaps: this.core.options.ui.fitViewport === true,
         hourElement: hour,
         minutesElement: minutes,
         onMinuteCommit: () => {

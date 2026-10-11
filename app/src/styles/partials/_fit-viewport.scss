@@ -1,0 +1,71 @@
+@use '../variables.scss' as *;
+
+.tp-ui-modal.tp-ui-fit-viewport {
+  --tp-fit-size: calc(100vmin - 2 * var(--tp-fit-margin, var(--tp-spacing-xs)));
+  --tp-size-clock: var(--tp-fit-size);
+
+  .tp-ui-wrapper {
+    height: var(--tp-fit-size);
+    border-radius: 50%;
+  }
+
+  .tp-ui-mobile-clock-wrapper.expanded {
+    height: var(--tp-fit-size);
+  }
+
+  .tp-ui-body {
+    width: var(--tp-fit-size);
+    height: var(--tp-fit-size);
+  }
+
+  .tp-ui-tips-wrapper-24h {
+    width: calc(var(--tp-fit-size) * 0.78125);
+    height: calc(var(--tp-fit-size) * 0.78125);
+  }
+
+  .tp-ui-hour-time-12,
+  .tp-ui-minutes-time,
+  .tp-ui-hour-time-24 {
+    font-size: calc(var(--tp-fit-size) * 0.06875);
+  }
+
+  .tp-ui-clock-hand {
+    height: calc(var(--tp-fit-size) * 0.4375 - 25px);
+
+    &.tp-ui-clock-hand-24h {
+      height: calc(var(--tp-fit-size) * 0.3906 - 21px);
+    }
+  }
+
+  .tp-ui-circle-hand {
+    width: calc(var(--tp-fit-size) * 0.125);
+    height: calc(var(--tp-fit-size) * 0.125);
+
+    &.small-circle {
+      width: calc(var(--tp-fit-size) * 0.1);
+      height: calc(var(--tp-fit-size) * 0.1);
+    }
+  }
+
+  .tp-ui-dot {
+    width: calc(var(--tp-fit-size) * 0.03125);
+    height: calc(var(--tp-fit-size) * 0.03125);
+  }
+
+  .tp-ui-dismiss-btn {
+    top: 50% !important;
+    right: auto !important;
+    left: 50%;
+    width: calc(var(--tp-fit-size) * 0.14);
+    height: calc(var(--tp-fit-size) * 0.14);
+    border: var(--tp-border-width-thick) solid var(--tp-primary);
+    box-shadow: 0 0 0 var(--tp-spacing-xs) var(--tp-surface);
+    transform: translate(-50%, -50%);
+
+    svg {
+      width: 60%;
+      height: 60%;
+      stroke-width: 3;
+    }
+  }
+}

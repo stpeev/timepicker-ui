@@ -22,6 +22,7 @@ describe('options defaults', () => {
       expect(DEFAULT_OPTIONS.ui.hideHeader).toBe(false);
       expect(DEFAULT_OPTIONS.ui.hideFooter).toBe(false);
       expect(DEFAULT_OPTIONS.ui.showDismissButton).toBe(false);
+      expect(DEFAULT_OPTIONS.ui.fitViewport).toBe(false);
     });
 
     it('should have labels options', () => {
@@ -107,7 +108,14 @@ describe('options defaults', () => {
 
     it('should merge ui options', () => {
       const result = mergeOptions({
-        ui: { theme: 'dark', mobile: true, hideHeader: true, hideFooter: true, showDismissButton: true },
+        ui: {
+          theme: 'dark',
+          mobile: true,
+          hideHeader: true,
+          hideFooter: true,
+          showDismissButton: true,
+          fitViewport: true,
+        },
       });
 
       expect(result.ui.theme).toBe('dark');
@@ -115,6 +123,7 @@ describe('options defaults', () => {
       expect(result.ui.hideHeader).toBe(true);
       expect(result.ui.hideFooter).toBe(true);
       expect(result.ui.showDismissButton).toBe(true);
+      expect(result.ui.fitViewport).toBe(true);
       expect(result.ui.animation).toBe(true);
     });
 
